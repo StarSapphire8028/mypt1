@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingao.app190806.springmvc190806.mapper.App_OrderList_Mapper">
+  
+  <select id="getOrderLists" resultType="com.qingao.app190806.springmvc190806.pojo.Orderlist" parameterType="java.util.List" >
+  	SELECT cart.gdid,cart.gdcount,cart.gsid ,gprice.price FROM cart 
+		  JOIN goodsprice gprice ON cart.gdid=gprice.gdid 
+		  JOIN USER ON gprice.utid=user.utid 
+		  WHERE user.userid=cart.userid AND cart.ctid in 
+		  
+		  <foreach collection="list" item="ctid" open="(" close=")" separator="," >
+		  	
+		  	#{ctid}
+		  
+		  </foreach>
+		  
+		  
+  </select>
+  
+</mapper>

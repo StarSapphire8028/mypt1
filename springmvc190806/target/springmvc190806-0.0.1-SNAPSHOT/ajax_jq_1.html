@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ajax_1.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="/springmvc190806/dist/css/bootstrap.css">
+	<script type="text/javascript" src="/springmvc190806/sysjs/jquery.js" ></script>
+	
+	
+  </head>
+  
+  <body>	
+ 			
+ 			<div class="container">
+ 			
+ 				
+	 			<button id="bt1" >打招呼</button>
+	 			
+ 				<button id="bt2" >说再见</button>
+	 			
+ 			
+ 			
+ 			</div>
+ 			
+ 			
+ 			
+  </body>
+  
+  <script type="text/javascript">
+  
+  	$("").ready(function(){
+  	
+  		$("#bt1").click(function(){
+  		
+  			$.getScript("/springmvc190806/sysjs/Sys1.js",function(){
+  			
+  				sayHi();
+  			});
+  			
+  			
+  		});
+  		
+  		
+  		$("#bt2").click(function(){
+  		
+  			$.getScript("/springmvc190806/sysjs/Sys2.js",function(){
+  				
+  				sayBye();
+  			
+  			});
+  		});
+  		
+  		
+  	
+  	});
+	 
+	 
+  
+  
+  </script>
+  
+  
+  
+</html>

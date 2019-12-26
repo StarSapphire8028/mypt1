@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ajax_1.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta charset="UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>	
+ 			
+ 			
+ 			<a href="/springmvc190806/ajaxctr/acceptajax">同步请求</a>
+ 				
+ 			<hr/>
+ 				
+ 			<button id="bt1" >ajax go</button>
+ 
+ 			
+ 			<div id="dv1">
+ 			</div>
+ 			
+ 			<div id="dv2">
+ 			</div>			
+ 			
+  </body>
+  
+  <script type="text/javascript">
+  
+  
+  	window.setInterval(function() {
+  		
+  		var dv1=document.getElementById("dv1");
+  		dv1.innerHTML=new Date();
+  		
+  	}, 1000);
+  
+  	
+  	
+	 
+	 var bt1=document.getElementById("bt1");
+	 
+	 	 
+	bt1.onclick=function(){
+	 	
+  		var ajax1=getXmlHttpRequest();
+  		
+  		ajax1.onreadystatechange=function(){
+  			if(ajax1.readyState==4){
+  				document.getElementById("dv2").innerHTML=ajax1.responseText;
+  				alert("111111111服务器响应成功");
+  			}	
+  		};
+  		
+  		
+  		//open方法第三个参数 设置 ajax 行为 按照 异步处理或 同步处理，本质上可以理解为 代码的流程控制方式，默认为异步
+  		
+	 	ajax1.open("post","/springmvc190806/ajaxctr/accept1",false);
+	 	
+	 	
+	 	ajax1.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	 	
+	 	ajax1.send("uname=mary&password=999999");	
+	 	
+	 	
+	 	alert("222222222send 之后的 操作， 呵呵")
+	 	 	
+	 };
+	 
+	
+	 
+	
+	 
+	 
+	 
+	 
+	 function getXmlHttpRequest(){
+	 
+		if (window.XMLHttpRequest) {
+			
+		  	return new XMLHttpRequest();  // code for IE7+, Firefox, Chrome, Opera, Safari
+		 }
+		else{
+		    return new ActiveXObject("Microsoft.XMLHTTP");  // code for IE6, IE5
+		}
+	 }
+	 
+  
+  
+  
+  </script>
+  
+  
+  
+</html>

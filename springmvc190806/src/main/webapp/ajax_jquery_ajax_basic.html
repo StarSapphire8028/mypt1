@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ajax_1.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="http://192.168.1.226:8088/springmvc190806/dist/css/bootstrap.css">
+	<script type="text/javascript" src="http://192.168.1.226:8088/springmvc190806/sysjs/jquery.js" ></script>
+  </head>
+  
+  <body>	
+ 			
+ 			<div class="container">
+ 			
+ 				
+	 			
+	 			<table id="tb1" class="table table-hover text-center">
+	 				
+	 				<thead>
+	 					<tr>
+	 						<td>编号</td>
+	 						<td>名称</td>
+	 						<td>行政级别</td>
+	 						<td>上级地区编号</td>
+	 						<td>数据维护</td>
+	 						
+	 					</tr>
+	 				
+	 				</thead>
+	 				<tbody>
+	 					
+	 				
+	 				</tbody>
+	 			
+	 			
+	 			</table>
+ 			
+ 			
+ 				<hr/>
+ 				
+ 				<div class="text-center">
+ 					<button  class="btn btn-link" pn="1" >首页</button>
+ 					<button  class="btn btn-link" pn="0" btn="prev" >上一页</button>
+ 					
+ 					<span id="pagenums"></span>
+ 					
+ 					<button  class="btn btn-link" pn="0" btn="next" >下一页</button>
+ 					<button  class="btn btn-link" pn="0" >尾页</button>
+ 					
+ 				</div>
+ 			
+ 			
+ 			
+ 			</div>
+ 			
+ 			
+ 			
+  </body>
+  
+  <script type="text/javascript">
+  
+  	$("").ready(function(){
+  	
+  		
+  		
+  		getInfoes(1);
+  		
+  		
+  		$("[pn]").click(function(){
+  			getInfoes($(this).attr("pn"));
+  		
+  		});
+  		
+  		
+  	
+  	
+  		function getInfoes(pagenum){
+  			
+  			var url="http://192.168.1.226:8088/springmvc190806/ajaxctr/acceptajax";
+  			var params={"pagenum":pagenum};
+  		
+  			
+  			$.ajax(url,
+  			
+  			{
+  				xhrFields: {
+						"withCredentials": true
+					}, //为跨域操作 保持 session稳定一致
+  				error:function(){
+  					alert("出问题了")
+  				},
+  				method:"post",
+  				data:params,
+  				dataType:"json",
+  				success:function(result){
+  				
+  				
+  				$("[pn]:last").attr("pn",result.pagecount);
+  				
+  				var prev=(result.currentpagenum-1)<1?1:result.currentpagenum-1;
+  				
+  				$("[btn=prev]").attr("pn",prev);
+  				
+  				var next=(result.currentpagenum+1)>result.pagecount?result.pagecount:result.currentpagenum+1;
+  				
+  				$("[btn=next]").attr("pn",next);
+  				
+  				
+  				
+  				
+  				$("#pagenums button").remove();
+  				
+  				for(var i=1;i<=result.pagecount;i++){
+  					
+  					if(i==result.currentpagenum){
+  						$("#pagenums").append("<button class='btn btn-primary disabled' >"+i+"</button>");
+  					}
+  					else{
+  						$("#pagenums").append("<button  class='btn btn-link' pn='"+i+"' >"+i+"</button>");
+  					}
+  					
+  					$("#pagenums button:last").click(function(){
+  						
+  						getInfoes($(this).attr("pn"));
+  						
+  					});
+  					
+  					
+  				
+  				}
+  				
+  				
+  				
+  				var dts="";
+  				
+  				$("#tb1 tbody tr").remove();
+  				
+  				
+  				for(var i in result.infoes){
+  				
+  				
+  					var area=result.infoes[i];
+  					
+  					dts+="<tr>";
+  					dts+="<td>"+area.aid+"</td>";
+  					dts+="<td>"+area.aname+"</td>";
+  					dts+="<td>"+area.alevel+"</td>";
+  					dts+="<td>"+(area.parentname==null?"":area.parentname)+"</td>";
+  					dts+="<td><button class='btn btn-danger'>删除</button></td>";
+  					
+  					dts+="</tr>";
+  				
+  				}
+  				
+  				$("#tb1 tbody").append(dts);
+  				
+  				
+  			} 
+  			
+  			});
+  		
+  		
+  		
+  		
+  			
+  		
+  		}
+  	
+  	
+  	});
+	 
+	 
+  
+  
+  </script>
+  
+  
+  
+</html>
