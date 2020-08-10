@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: cloud-zuul
+   # 配置数据库信息    
+  
+server:
+  port: 30000
+  
+
+
+eureka: 
+  client:
+    service-url:     #设置与Eureka  单机
+       defaultZone: http://127.0.0.1:9000/eureka/
+
+       
+
+zuul:
+  routes:
+    CLOUD-FEIGN-1: 
+      path: /feign_1/**
+      service-id: CLOUD-FEIGN-1
